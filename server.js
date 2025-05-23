@@ -1,10 +1,7 @@
-const puppeteer = require('puppeteer-core');
 const express = require('express');
-const app = express();
 const puppeteer = require('puppeteer-core');
-const express = require('express');
-const app = express();
 
+const app = express();
 app.use(express.json());
 
 app.post('/render', async (req, res) => {
@@ -16,7 +13,7 @@ app.post('/render', async (req, res) => {
 
   try {
     const browser = await puppeteer.launch({
-      executablePath: '/usr/bin/google-chrome', // 👈 This is key for Render!
+      executablePath: '/usr/bin/google-chrome',
       headless: 'new',
       args: ['--no-sandbox', '--disable-setuid-sandbox']
     });
@@ -28,7 +25,7 @@ app.post('/render', async (req, res) => {
 
     res.json({ html });
   } catch (error) {
-    console.error(error);
+    console.error('Render Error:', error);
     res.status(500).json({ error: error.message });
   }
 });
