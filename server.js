@@ -1,5 +1,5 @@
 const express = require('express');
-const puppeteer = require('puppeteer-core');
+const { chromium } = require('playwright');
 
 const app = express();
 app.use(express.json());
@@ -12,20 +12,18 @@ app.post('/render', async (req, res) => {
   }
 
   try {
-    const browser = await puppeteer.launch({
-      executablePath: '/usr/bin/google-chrome',
-      headless: 'new',
-      args: ['--no-sandbox', '--disable-setuid-sandbox']
+    const browser = await chromium.launch({
+      headless: true,
     });
 
     const page = await browser.newPage();
-    await page.goto(url, { waitUntil: 'networkidle2', timeout: 60000 });
+    await page.goto(url, { waitUntil: 'networkidle' });
     const html = await page.content();
     await browser.close();
 
     res.json({ html });
   } catch (error) {
-    console.error('Render Error:', error);
+    console.error('Render error:', error);
     res.status(500).json({ error: error.message });
   }
 });
