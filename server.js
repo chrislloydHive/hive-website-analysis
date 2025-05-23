@@ -1,4 +1,6 @@
-const chrome = require('chrome-aws-lambda'); // Optional if you want cloud-compatibility
+const puppeteer = require('puppeteer-core');
+const express = require('express');
+const app = express();
 const puppeteer = require('puppeteer-core');
 const express = require('express');
 const app = express();
