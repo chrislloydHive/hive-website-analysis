@@ -2,6 +2,7 @@ services:
   - type: web
     name: hive-render-service
     env: node
+    plan: starter
     buildCommand: npm install
     startCommand: node server.js
-    plan: starter
+    autoDeploy: true
