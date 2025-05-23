@@ -1,7 +1,8 @@
+const chrome = require('chrome-aws-lambda'); // Optional if you want cloud-compatibility
+const puppeteer = require('puppeteer-core');
 const express = require('express');
-const puppeteer = require('puppeteer');
-
 const app = express();
+
 app.use(express.json());
 
 app.post('/render', async (req, res) => {
@@ -13,6 +14,7 @@ app.post('/render', async (req, res) => {
 
   try {
     const browser = await puppeteer.launch({
+      executablePath: '/usr/bin/google-chrome', // 👈 This is key for Render!
       headless: 'new',
       args: ['--no-sandbox', '--disable-setuid-sandbox']
     });
